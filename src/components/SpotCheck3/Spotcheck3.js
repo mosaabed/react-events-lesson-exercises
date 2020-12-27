@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+
+
+
+
 class SpotCheck3 extends Component {
     constructor() {
         super()
@@ -23,6 +27,7 @@ class SpotCheck3 extends Component {
                             <sup>{q.likes}</sup>
                             <span onClick={this.likeQuote}>+</span>
                             <span>{q.text}</span>
+                            <div id="container"></div>
                         </div>
                     )
                 })}
@@ -30,5 +35,57 @@ class SpotCheck3 extends Component {
         )
     }
 }
+
+
+
+class Bank extends React.Component{
+    constructor(){
+      super();
+      this.state = {
+        availableCash: 100000,
+        vipClients: ["Trisha", "Kareem", "Melanie", "Anish"]
+      }
+    }
+  
+    doubleMoney = () =>{
+      //Here it's okay to access state directly as we modify it
+        //This is *not* the same as modifying state directly
+        //i.e. it's not this.state.availableCash = this.state.availableCash * 2
+      this.setState({
+        availableCash: this.state.availableCash * 2
+      })
+    }
+    
+    removeVIP = () =>{
+      //Here we must use the spread operator
+      //If we don't, then currentVIPs will just be a reference to this.state.vipClients
+      //And since currentVIPs.pop() is the same as this.state.vipClients.pop() - it's not allowed
+      let currentVIPs = [...this.state.vipClients]
+      currentVIPs.pop()
+      this.setState({
+        vipClients: currentVIPs
+      })
+    }
+    
+    showStatus = () => {
+      console.log(this.state.availableCash)
+      console.log(this.state.vipClients)
+    }
+    
+    render(){
+      return(<div>
+        <button onClick={this.doubleMoney}>Add Money</button>
+        <button onClick={this.removeVIP}>Remove VIP</button>
+        <button onClick={this.showStatus}>Show</button>
+      </div>)
+    }
+  }
+  
+
+
+  //ReactDOM.render(<Bank />, document.getElementById("container"));
+  
+
+
 
 export default SpotCheck3;
